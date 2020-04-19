@@ -37,9 +37,9 @@ public class FXMLController {
     		try {
     			int numeroCrediti = Integer.parseInt(txtInput.getText());
     			
-    			Long start = System.currentTimeMillis();
+    			Long start = System.currentTimeMillis(); //prima di chiamare la funzione
     			Set<Esame> voti = model.calcolaSottoinsiemeEsami(numeroCrediti);
-    			Long end = System.currentTimeMillis();
+    			Long end = System.currentTimeMillis(); //dopo che la ricorsiva è terminata
     			
     			
     			if(voti == null) {
@@ -48,7 +48,9 @@ public class FXMLController {
     			}
     			
     			txtResult.appendText("TEMPO IMPIEGATO: " + (end-start) + " ms\n");
-    			txtResult.appendText("MEDIA: " + this.model.calcolaMedia(voti) + "\n");
+    			
+    			txtResult.appendText("MEDIA: " + this.model.calcolaMedia(voti) + "\n"); //metto il metodo MEDIA pubblico
+    			
     			for(Esame e : voti) {
     				txtResult.appendText(e.toString() + "\n");
     			}

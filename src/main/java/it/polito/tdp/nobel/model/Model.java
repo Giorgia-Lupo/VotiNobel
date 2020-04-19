@@ -8,10 +8,10 @@ import it.polito.tdp.nobel.db.EsameDAO;
 
 public class Model {
 
-	private List<Esame> esami;
+	private List<Esame> esami; //per riuscire a modellare l'ordine
 	
-	private double bestMedia = 0.0;
-	private Set<Esame> bestSoluzione = null;
+	private double bestMedia = 0.0; //tiene traccia della media migliore incontrata
+	private Set<Esame> bestSoluzione = null;//per dare in output un insieme ottimo di esami
 	
 	
 	public Model () {
@@ -26,7 +26,7 @@ public class Model {
 		
 		cerca1(parziale, 0, numeroCrediti);
 		
-		return bestSoluzione;
+		return bestSoluzione; //se non trova nulla, ritorna null
 	}
 	
 	
@@ -37,19 +37,19 @@ public class Model {
 		//casi terminali
 		
 		int crediti = sommaCrediti(parziale);
-		if(crediti > m)
+		if(crediti > m) //non mi va bene
 			return;
 		
 		if(crediti == m) {
-			double media = calcolaMedia(parziale);
-			if(media > bestMedia) {
-				bestSoluzione = new HashSet<>(parziale);
+			double media = calcolaMedia(parziale);//restituisce media dato un Set<Esame>
+			if(media > bestMedia) { //bestMedia=medie incontrate fino ad adesso
+				bestSoluzione = new HashSet<>(parziale);//sovrascrivo la soluzione ottima
 				bestMedia = media;
 			}
 		}
 		
 		//sicuramente, crediti < m
-		if(L == esami.size()) {
+		if(L == esami.size()) { //non ci sono più esami da considerare
 			return ;
 		}
 		
@@ -57,21 +57,22 @@ public class Model {
 		//generiamo i sotto-problemi
 		//esami[L] è da aggiungere o no? Provo entrambe le cose
 		
-		//provo ad aggiungerlo
-		parziale.add(esami.get(L));
-		cerca1(parziale, L+1,m);
-		parziale.remove(esami.get(L));
+		//1. provo ad aggiungerlo
+		parziale.add(esami.get(L)); //aggiungo a parziale l'l-esimo esame.
+		cerca1(parziale, L+1,m); //ricorsione con il nuovo parziale
+		parziale.remove(esami.get(L)); //backtrakking
 		
-		//provo a non aggiungerlo
-		cerca1(parziale, L+1, m);
+		//2. provo a non aggiungerlo
+		cerca1(parziale, L+1, m); //lancio parziale così com'è.
 		
 		
 	}
 	
+	
 	/* APPROCCIO 2 */
 	/* Complessità : N! */
 	private void cerca2(Set<Esame> parziale, int L, int m) {
-		//casi terminali
+		//casi terminali, uguali a cerca1
 		
 		int crediti = sommaCrediti(parziale);
 		if(crediti > m)
@@ -91,11 +92,12 @@ public class Model {
 		}
 		
 		//generiamo i sotto-problemi
-		for(Esame e : esami) {
-			if(!parziale.contains(e)) {
+		for(Esame e : esami) { //a partire dal primo lo aggiungo a parziale, poi provo con il II°
+			if(!parziale.contains(e)) { //controllo che non contenga già l'esame in questione
 				parziale.add(e);
 				cerca2(parziale, L + 1, m);
-				parziale.remove(e);
+				parziale.remove(e); //al secondo giro del for, provo soluzioni che iniziano
+				                    //con il secondo esame in parziale
 			}
 		}
 	}

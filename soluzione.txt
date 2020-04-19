@@ -7,9 +7,11 @@ OUTPUT:
 		* Media Esame.voto sia MAX
 		
 
-APROCCIO 1: generare i sottoinsiemi di PARTENZA 1 caso per
+APROCCIO 1: generare i sottoinsiemi di PARTENZA, un caso per
 volta, decidendo esame per esame, se debba o non debba far
-parte della soluzione 
+parte della soluzione. ad ogni esame mi chiedo, lo metto o no?
+Provo e faccio andare avanti la ricorsione con quell'elemento oppure
+non lo metto e vado avanti lo stesso senza quell'elemento. 
 
 * Livello della ricorsione L mi indica quale corso sto 
 decidendo di mettere o non mettere

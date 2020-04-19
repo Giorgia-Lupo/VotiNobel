@@ -1,4 +1,4 @@
-package it.polito.tdp.nobel.model;
+ package it.polito.tdp.nobel.model;
 
 public class Esame {
 
