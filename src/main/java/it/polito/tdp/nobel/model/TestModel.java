@@ -8,6 +8,8 @@ public class TestModel {
 		Model model = new Model();
 		model.calcolaSottoinsiemeEsami(20);
 		
+		
+		
 	}
 
 }
